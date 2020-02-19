@@ -8,5 +8,21 @@
 
 import Foundation
 
-print("Hello, World!")
+func readTextFile(fileName : String){
+    print(Bundle.main.bundlePath)
+    if let path = Bundle.main.path(forResource: fileName, ofType: "txt"){
+//        print(path)
+        let str = try! String(contentsOfFile: path)
+        print(str)
+        
+//        let str = try? String(contentsOfFile: path)
+//        if let s = str{
+//            print(s)
+//        }else{
+//            print("Error")
+//        }
 
+    }
+}
+
+readTextFile(fileName: "data")
