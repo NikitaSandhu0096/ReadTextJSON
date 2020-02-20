@@ -27,10 +27,40 @@ func readTextFile(fileName : String){
 
 readTextFile(fileName: "data")
 
+//func readJSONUserInfo(fileName : String){
+//    if let path = Bundle.main.path(forResource: fileName, ofType: "json"){
+//        let str = try! String(contentsOfFile: path)
+//        print(str)
+//    }
+//}
+
 func readJSONUserInfo(fileName : String){
-    if let path = Bundle.main.path(forResource: fileName, ofType: "json"){
-        let str = try! String(contentsOfFile: path)
-        print(str)
+    let filePath = Bundle.main.url(forResource: fileName, withExtension: "json")
+    guard let path = filePath else{
+        print("Invalid File Path found")
+        return
+    }
+    
+    guard let data = try? Data(contentsOf: path) else{
+        print("Error while read Data from URL")
+        return
+    }
+    
+    guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+        print("Error while reading JSON Data from file")
+        return
+    }
+    
+    print(json)
+    
+    if let userDictionary = json as? [String : Any]{
+        let id = userDictionary["id"] ?? "No ID Found"
+        print(id)
+        
+        if let addressDictionary = userDictionary["address"] as? [String : Any]{
+            print(addressDictionary["city"]!)
+        }
+//        print(userDictionary)
     }
 }
 
